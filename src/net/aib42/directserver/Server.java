@@ -56,6 +56,9 @@ public class Server
 			ioe.printStackTrace();
 			return;
 		}
+
+		Thread clientThread = new Thread(client, "Client #" + client.getId());
+		clientThread.start();
 	}
 
 	/**

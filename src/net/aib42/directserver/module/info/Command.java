@@ -17,7 +17,8 @@ public class Command extends ModuleCommand
 	@Override
 	public void run()
 	{
-		byte[] infoBytes = ("DirectServer v" + Server.VERSION_STR + " by aib").getBytes(Charset.forName("UTF-8"));
+		ByteBuffer infoBytes = server.getServerInformation();
+		infoBytes.flip();
 		client.writeToSocket(infoBytes);
 	}
 }

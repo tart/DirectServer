@@ -1,6 +1,7 @@
 package net.aib42.directserver;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -69,6 +70,22 @@ public class Client
 	public void queueCommand(ModuleCommand command)
 	{
 		commandQueue.add(command);
+	}
+
+	/**
+	 * Writes to the client socket
+	 */
+	public void writeToSocket(byte[] bytes)
+	{
+		socketHandler.writeToSocket(bytes);
+	}
+
+	/**
+	 * Writes to the client socket
+	 */
+	public void writeToSocket(ByteBuffer bytes)
+	{
+		socketHandler.writeToSocket(bytes);
 	}
 
 	/**

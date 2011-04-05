@@ -32,10 +32,11 @@ public class Client
 	@Override
 	public void run()
 	{
+clientLoop:
 		while (true) {
 			if (!socketHandler.readFromSocket()) {
 				System.out.println("Client #" + id + " disconnecting.");
-				return;
+				break clientLoop;
 			}
 
 			try {
@@ -43,7 +44,7 @@ public class Client
 			} catch (CommandParseError cpe) {
 				System.out.println("Command parse error client #" + id + ", disconnecting:");
 				cpe.printStackTrace(System.out);
-				return;
+				break clientLoop;
 			}
 
 			ModuleCommand command;
@@ -53,13 +54,13 @@ public class Client
 				} catch (InterruptedException ie) {
 					System.out.println("Client #" + id + " command interrupted:");
 					ie.printStackTrace(System.out);
-					return;
+					break clientLoop;
 				}
 			}
 
 			if (!socketHandler.getReadBuffer().hasRemaining()) {
 				System.out.println("Client #" + id + " buffer full, disconnecting.");
-				return;
+				break clientLoop;
 			}
 		}
 

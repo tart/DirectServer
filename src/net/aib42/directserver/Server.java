@@ -1,6 +1,8 @@
 package net.aib42.directserver;
 
 import java.io.IOException;
+import java.nio.BufferOverflowException;
+import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicLong;
@@ -82,6 +84,46 @@ public class Server
 	public Module getModuleByCommandPrefix(byte commandPrefix)
 	{
 		return modules.get(new Byte(commandPrefix));
+	}
+
+	/**
+	 * Returns server-wide and module-specific information
+	 *
+	 * Used by the info module
+	 */
+	public ByteBuffer getServerInformation()
+	{
+		ByteBuffer serverInfo = ByteBuffer.allocate(64000);
+
+		try {
+			serverInfo.put(
+				new String("DirectServer v" + Server.VERSION_STR + "\n")
+					.getBytes(java.nio.charset.Charset.forName("UTF-8"))
+			);
+
+			serverInfo.put(
+				new String("Module count: " + modules.size() + "\n")
+					.getBytes(java.nio.charset.Charset.forName("UTF-8"))
+			);
+
+			for (Module m : modules.values()) {
+				serverInfo.put(m.getCommandPrefix());
+
+				ByteBuffer mi = m.getModuleInformation();
+
+				if (mi != null) {
+					mi.flip();
+					serverInfo.putShort((short) mi.remaining());
+					serverInfo.put(mi);
+				} else {
+					serverInfo.putShort((short) 0);
+				}
+			}
+		} catch (BufferOverflowException boe) {
+			System.err.println("Warning: Server information exceeds buffer capacity.");
+		}
+
+		return serverInfo;
 	}
 
 	public CommandParser getCommandParser()

@@ -14,16 +14,15 @@ public class ClientSocketHandler
 	public static final int READ_BUFFER_SIZE  = 4096;
 	public static final int WRITE_BUFFER_SIZE = 4096;
 
-	private Client client;
 	private SocketChannel channel;
 	private Selector selector;
 
 	private ByteBuffer readBuffer;
 	private ByteBuffer writeBuffer;
 
-	public ClientSocketHandler(Client client, SocketChannel channel) throws IOException
+	public ClientSocketHandler(SocketChannel channel) throws IOException
 	{
-		this.client = client;
+		this.channel = channel;
 		selector = Selector.open();
 
 		readBuffer = ByteBuffer.allocate(READ_BUFFER_SIZE);

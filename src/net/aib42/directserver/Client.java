@@ -22,7 +22,7 @@ public class Client
 	{
 		this.server = server;
 		this.id = id;
-		socketHandler = new ClientSocketHandler(this, channel);
+		socketHandler = new ClientSocketHandler(channel);
 		commandQueue = new LinkedList<ModuleCommand>();
 	}
 

@@ -6,6 +6,7 @@ import java.net.InetSocketAddress;
 import net.aib42.directserver.Server;
 import net.aib42.directserver.module.Module;
 import net.aib42.directserver.module.info.InfoModule;
+import net.aib42.directserver.module.lock.LockModule;
 import net.aib42.directserver.net.ConnectionListener;
 
 public class Driver
@@ -16,14 +17,14 @@ public class Driver
 		ConnectionListener listener;
 
 		Module infoModule = new InfoModule(server);
+		Module lockModule = new LockModule(server);
 
-		if (
-		    !server.registerModule(infoModule)
+		if (!server.registerModule(infoModule) ||
+		    !server.registerModule(lockModule)
 		) {
 			System.err.println("Unable to register a module.");
 			return;
 		}
-
 
 		try {
 			listener = new ConnectionListener(server, new InetSocketAddress(6666));

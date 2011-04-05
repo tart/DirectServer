@@ -5,9 +5,34 @@ import java.nio.ByteBuffer;
 
 import net.aib42.directserver.Client;
 import net.aib42.directserver.module.CommandParseError;
+import net.aib42.directserver.Server;
 
 public abstract class Module
 {
+	protected Server server;
+
+	public Module(Server server)
+	{
+		this.server = server;
+	}
+
+	/**
+	 * Returns the module's command character
+	 */
+	public abstract byte getCommandPrefix();
+
+	/**
+	 * Handles module registration
+	 */
+	public void moduleRegistered()
+	{}
+
+	/**
+	 * Handles client disconnection
+	 */
+	public void clientDisconnected(Client client)
+	{}
+
 	/**
 	 * Parses a client command from the buffer
 	 *

@@ -11,20 +11,23 @@ import net.aib42.directserver.Client;
 
 public class ClientSocketHandler
 {
+	public static final int READ_BUFFER_SIZE  = 4096;
+	public static final int WRITE_BUFFER_SIZE = 4096;
+
 	private Client client;
 	private SocketChannel channel;
 	private Selector selector;
 
 	private ByteBuffer readBuffer;
-//	private ByteBuffer writeBuffer;
+	private ByteBuffer writeBuffer;
 
 	public ClientSocketHandler(Client client, SocketChannel channel) throws IOException
 	{
 		this.client = client;
 		selector = Selector.open();
 
-		readBuffer = ByteBuffer.allocate(1024);
-//		writeBuffer = ByteBuffer.allocate(1024);
+		readBuffer = ByteBuffer.allocate(READ_BUFFER_SIZE);
+		writeBuffer = ByteBuffer.allocate(WRITE_BUFFER_SIZE);
 
 		channel.configureBlocking(false);
 		channel.register(selector, SelectionKey.OP_READ);
@@ -67,10 +70,47 @@ public class ClientSocketHandler
 	}
 
 	/**
+	 * Writes to the socket
+	 */
+	public void writeToSocket(byte[] bytes)
+	{
+		writeBuffer.clear();
+		writeBuffer.put(bytes);
+		writeBuffer();
+	}
+
+	/**
+	 * Writes to the socket
+	 */
+	public void writeToSocket(ByteBuffer bytes)
+	{
+		writeBuffer.clear();
+		writeBuffer.put(bytes);
+		writeBuffer();
+	}
+
+	/**
 	 * Returns the socket read buffer
 	 */
 	public ByteBuffer getReadBuffer()
 	{
 		return readBuffer;
+	}
+
+	/**
+	 * Writes the write buffer to the socket
+	 */
+	private void writeBuffer()
+	{
+		writeBuffer.flip();
+		while (writeBuffer.hasRemaining()) {
+			try {
+				channel.write(writeBuffer);
+			} catch (IOException ioe) {
+				System.err.println("Error writing to client socket:");
+				ioe.printStackTrace();
+				return;
+			}
+		}
 	}
 }

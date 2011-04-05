@@ -34,6 +34,16 @@ public abstract class Module
 	{}
 
 	/**
+	 * Returns module-specific information and statistics, used by the info module
+	 *
+	 * @return null if the module does not wish to depart with any information
+	 */
+	public ByteBuffer getModuleInformation()
+	{
+		return null;
+	}
+
+	/**
 	 * Parses a client command from the buffer
 	 *
 	 * Reads /buffer/ from /position/ to /limit/, returning true if a command was successfully parsed, in which case

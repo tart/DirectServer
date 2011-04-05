@@ -64,6 +64,7 @@ public class Server
 	public void handleClientDisconnect(Client client)
 	{
 		System.out.println("Client #" + client.getId() + " disconnected.");
+		client.disconnect();
 
 		for (Module m : modules.values()) {
 			m.clientDisconnected(client);

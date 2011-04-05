@@ -62,6 +62,8 @@ public class Client
 				return;
 			}
 		}
+
+		server.handleClientDisconnect(this);
 	}
 
 	/**

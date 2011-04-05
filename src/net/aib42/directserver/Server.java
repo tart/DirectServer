@@ -42,6 +42,9 @@ public class Server
 		return true;
 	}
 
+	/**
+	 * Called when a new connection is made
+	 */
 	public void handleClientConnect(SocketChannel clientChannel)
 	{
 		Client client;
@@ -52,6 +55,18 @@ public class Server
 			System.err.println("Error creating new client:");
 			ioe.printStackTrace();
 			return;
+		}
+	}
+
+	/**
+	 * Called by a client after it disconnects
+	 */
+	public void handleClientDisconnect(Client client)
+	{
+		System.out.println("Client #" + client.getId() + " disconnected.");
+
+		for (Module m : modules.values()) {
+			m.clientDisconnected(client);
 		}
 	}
 
@@ -69,5 +84,4 @@ public class Server
 	{
 		return commandParser;
 	}
-
 }

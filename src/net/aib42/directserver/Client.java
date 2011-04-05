@@ -68,6 +68,14 @@ clientLoop:
 	}
 
 	/**
+	 * Disconnects this client
+	 */
+	public void disconnect()
+	{
+		socketHandler.disconnect();
+	}
+
+	/**
 	 * Inserts a command into this client's command queue
 	 */
 	public void queueCommand(ModuleCommand command)

@@ -69,6 +69,19 @@ public class ClientSocketHandler
 	}
 
 	/**
+	 * Closes the socket
+	 */
+	public void disconnect()
+	{
+		try {
+			channel.close();
+		} catch (IOException ioe) {
+			System.err.println("Error closing client socket:");
+			ioe.printStackTrace();
+		}
+	}
+
+	/**
 	 * Writes to the socket
 	 */
 	public void writeToSocket(byte[] bytes)

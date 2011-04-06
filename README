@@ -1,0 +1,12 @@
+This is a simple, thread-per-client, modular server implementation in Java.
+
+It can have up to 256 modules -not enforced, I just realized- that each register a "command prefix": a byte the module is responsible for parsing client packets that begin with.
+
+It's a not-very-well-thought-out modularization of a "Lock Server" that we needed for our PHP projects at Tart New Media (http://github.com/tart). The PHP client should be available on our GitHub page soon.
+
+It currently contains two modules:
+
+Info: Prints server and module information
+Lock: Provides a named lock service
+
+This is my third Java project and was written in 3 hours after a few days of playing with NIO and hashmaps and synchronization primitives. Its main goal is to serve as a stable lock server. So, enjoy!

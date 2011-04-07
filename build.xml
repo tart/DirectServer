@@ -6,17 +6,34 @@
 
 	<property name="main-class" value="net.aib42.directserver.ui.Driver"/>
 	<property name="src" location="src"/>
+	<property name="lib" location="lib"/>
 	<property name="build" location="bin"/>
 	<property name="dist" location="dist"/>
 
+	<fileset id="libs" dir="${lib}">
+		<include name="**/*.jar"/>
+	</fileset>
+	
 	<target name="compile" description="Compile the server">
 		<mkdir dir="${build}"/>
 
 		<javac srcdir="${src}" destdir="${build}">
+			<classpath>
+				<fileset refid="libs"/>
+			</classpath>
 		</javac>
 	</target>
 
-	<target name="dist" description="Create a JAR distribution" depends="compile">
+	<target name="extract-libs" description="Extract .class files from libraries into the build folder">
+		<mkdir dir="${build}"/>
+
+		<unzip dest="${build}">
+			<patternset includes="**/*.class"/>
+			<fileset refid="libs"/>
+		</unzip>
+	</target>
+	
+	<target name="dist" description="Create a JAR distribution" depends="compile,extract-libs">
 		<mkdir dir="${dist}"/>
 		
 		<jar jarfile="${dist}/DirectServer.jar" basedir="${build}">

@@ -1,0 +1,38 @@
+<project name="DirectServer" default="dist" basedir=".">
+
+	<description>
+		A simple, modular server.
+	</description>
+
+	<property name="main-class" value="net.aib42.directserver.ui.Driver"/>
+	<property name="src" location="src"/>
+	<property name="build" location="bin"/>
+	<property name="dist" location="dist"/>
+
+	<target name="compile" description="Compile the server">
+		<mkdir dir="${build}"/>
+
+		<javac srcdir="${src}" destdir="${build}">
+		</javac>
+	</target>
+
+	<target name="dist" description="Create a JAR distribution" depends="compile">
+		<mkdir dir="${dist}"/>
+		
+		<jar jarfile="${dist}/DirectServer.jar" basedir="${build}">
+			<manifest>
+				<attribute name="Main-Class" value="${main-class}"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="clean" description="Delete intermediate build files">
+		<delete dir="${build}"/>
+	</target>
+
+	<target name="distclean" description="Delete everything but the sources">
+		<antcall target="clean"/>
+		<delete dir="${dist}"/>
+	</target>
+
+</project>

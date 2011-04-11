@@ -93,7 +93,7 @@ int doGetLocks(const char *address, const char *port)
 		return 2;
 	}
 
-	int lockCount = 1000;
+	int lockCount = 1000000;
 	char lockName[LOCKNAMESIZE+1] = {0};
 	printf("Acquiring %i locks...\n", lockCount);
 
@@ -101,7 +101,7 @@ int doGetLocks(const char *address, const char *port)
 		generateLockName(lockName, LOCKNAMESIZE);
 
 		sbuf[0] = 'L';
-		sbuf[1] = 'L';
+		sbuf[1] = 'T';
 		sbuf[2] = LOCKNAMESIZE;
 		memcpy(sbuf+3, lockName, LOCKNAMESIZE);
 

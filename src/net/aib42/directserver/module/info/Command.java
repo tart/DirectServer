@@ -1,7 +1,6 @@
 package net.aib42.directserver.module.info;
 
 import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
 
 import net.aib42.directserver.Client;
 import net.aib42.directserver.Server;

@@ -75,4 +75,16 @@ public class OwnedLock<O>
 	{
 		return (lockOwner != null);
 	}
+
+	/**
+	 * Returns the owner of this lock, if any.
+	 *
+	 * This method should not be used for synchronization purposes; only diagnostics.
+	 *
+	 * @return owner of the lock or <code>null</code>
+	 */
+	public O getOwner()
+	{
+		return lockOwner;
+	}
 }

@@ -102,16 +102,11 @@ public class LockModule extends Module
 	@Override
 	public void clientDisconnected(Client client)
 	{
-try{
 		synchronized (lockMap) {
 			for (OwnedLock<Long> l : lockMap.values()) {
 				l.unlock(client.getId());
 			}
 		}
-}catch(NullPointerException npe){
-	System.out.println("NPE!");
-	npe.printStackTrace();
-}
 	}
 
 	@Override

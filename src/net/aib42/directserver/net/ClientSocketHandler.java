@@ -7,8 +7,6 @@ import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 
-import net.aib42.directserver.Client;
-
 public class ClientSocketHandler
 {
 	public static final int READ_BUFFER_SIZE  = 4096;

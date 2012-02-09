@@ -5,6 +5,8 @@ import java.nio.BufferOverflowException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.util.HashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicLong;
 
 import net.aib42.directserver.CommandParser;
@@ -17,12 +19,14 @@ public class Server
 	private AtomicLong nextClientId;
 	private CommandParser commandParser;
 	private HashMap<Byte, Module> modules;
+	private ExecutorService executor;
 
 	public Server()
 	{
 		nextClientId = new AtomicLong();
 		commandParser = new CommandParser(this);
 		modules = new HashMap<Byte, Module>();
+		executor = Executors.newCachedThreadPool();
 	}
 
 	/**
@@ -60,7 +64,7 @@ public class Server
 		}
 
 		Thread clientThread = new Thread(client, "Client #" + client.getId());
-		clientThread.start();
+		executor.execute(clientThread);
 	}
 
 	/**

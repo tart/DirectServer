@@ -3,7 +3,7 @@ package net.aib42.directserver.ui;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
-import net.aib42.common.Settings;
+import net.aib42.common.Arguments;
 import net.aib42.directserver.Server;
 import net.aib42.directserver.module.Module;
 import net.aib42.directserver.module.info.InfoModule;
@@ -28,9 +28,8 @@ public class Driver
 		}
 
 		try {
-			int portNumber = Settings.getInstance().getPortNumber();
-			listener = new ConnectionListener(server, 
-					new InetSocketAddress(portNumber));
+			int portNumber = Arguments.getInstance().getPortNumber(args);
+			listener = new ConnectionListener(server, new InetSocketAddress(portNumber));
 		} catch (IOException ioe) {
 			System.err.println("Unable to create connection listener:");
 			ioe.printStackTrace();

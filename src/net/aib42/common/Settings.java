@@ -40,7 +40,7 @@ public class Settings {
 	 * @return the port number
 	 */
 	public int getPortNumber(){
-		return Integer.parseInt(getValue("portNumber", "6666"));
+		return Integer.parseInt(getValue("portNumber", Defaults.PORT_NUMBER + ""));
 	}
 	
 	/**

@@ -14,12 +14,11 @@ import net.aib42.wrapper.primitive.ValueByteArray;
 
 public class LockModule extends Module
 {
-	private HashMap<ValueByteArray, OwnedLock<Long>> lockMap;
+	final private HashMap<ValueByteArray, OwnedLock<Long>> lockMap = new HashMap<ValueByteArray, OwnedLock<Long>>();
 
 	public LockModule(Server server)
 	{
 		super(server);
-		lockMap = new HashMap<ValueByteArray, OwnedLock<Long>>();
 	}
 
 	@Override
